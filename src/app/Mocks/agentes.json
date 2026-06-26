@@ -1,0 +1,7 @@
+[
+  { "Id": 1, "Nombre": "Jonathan", "Correo": "jonathan@makers.com", "Contrasena": "admin123", "RolId": 1 },
+  { "Id": 2, "Nombre": "Cristian", "Correo": "cristian@makers.com", "Contrasena": "admin123", "RolId": 1 },
+  { "Id": 3, "Nombre": "Hugo", "Correo": "hugo@makers.com", "Contrasena": "agente123", "RolId": 2 },
+  { "Id": 4, "Nombre": "Paula", "Correo": "paula@makers.com", "Contrasena": "agente123", "RolId": 2 },
+  { "Id": 5, "Nombre": "Yasmin", "Correo": "yasmin@makers.com", "Contrasena": "super123", "RolId": 3 }
+]
