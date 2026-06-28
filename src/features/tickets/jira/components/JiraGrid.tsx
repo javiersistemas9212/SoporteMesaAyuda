@@ -3,6 +3,7 @@ import {
   Box,
   Chip,
   IconButton,
+  Switch,
   Table,
   TableBody,
   TableCell,
@@ -11,6 +12,7 @@ import {
   TablePagination,
   TableRow,
   TableSortLabel,
+  Tooltip,
   Typography,
   Paper,
 } from '@mui/material';
@@ -56,6 +58,7 @@ export function JiraGrid({ data }: JiraGridProps) {
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
   const [filters, setFilters] = useState<Partial<Record<FilterField, Set<string>>>>({});
   const [filterAnchor, setFilterAnchor] = useState<{ field: FilterField; el: HTMLElement } | null>(null);
+  const [soloInconsistencias, setSoloInconsistencias] = useState(false);
 
   const filterOptions = useMemo<Record<FilterField, string[]>>(
     () => ({
@@ -94,20 +97,23 @@ export function JiraGrid({ data }: JiraGridProps) {
     (filters[field]?.size ?? 0) > 0;
 
   const processedData = useMemo(() => {
-    const filtered = data.filter(row =>
-      (Object.entries(filters) as [FilterField, Set<string>][]).every(
+    const filtered = data.filter(row => {
+      const passesColumnFilters = (Object.entries(filters) as [FilterField, Set<string>][]).every(
         ([field, selected]) => selected.size === 0 || selected.has(row[field])
-      )
-    );
+      );
+      const passesInconsistenciasFilter = !soloInconsistencias || row.Validaciones.length > 0;
+      return passesColumnFilters && passesInconsistenciasFilter;
+    });
     return [...filtered].sort((a, b) => {
       const cmp = String(a[sortField]).localeCompare(String(b[sortField]));
       return sortOrder === 'asc' ? cmp : -cmp;
     });
-  }, [data, filters, sortField, sortOrder]);
+  }, [data, filters, soloInconsistencias, sortField, sortOrder]);
 
   const paginated = processedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
-  const activeFilterCount = Object.values(filters).filter(s => s && s.size > 0).length;
+  const activeFilterCount =
+    Object.values(filters).filter(s => s && s.size > 0).length + (soloInconsistencias ? 1 : 0);
 
   return (
     <Paper elevation={2} sx={{ borderRadius: 2, overflow: 'hidden' }}>
@@ -170,8 +176,18 @@ export function JiraGrid({ data }: JiraGridProps) {
                 </TableCell>
               ))}
 
-              <TableCell sx={{ fontWeight: 700, bgcolor: 'grey.50' }}>
-                Validaciones
+              <TableCell sx={{ fontWeight: 700, bgcolor: 'grey.50', whiteSpace: 'nowrap' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                  Validaciones
+                  <Tooltip title={soloInconsistencias ? 'Mostrando solo con inconsistencias' : 'Mostrar solo con inconsistencias'}>
+                    <Switch
+                      size="small"
+                      checked={soloInconsistencias}
+                      onChange={e => { setSoloInconsistencias(e.target.checked); setPage(0); }}
+                      color="warning"
+                    />
+                  </Tooltip>
+                </Box>
               </TableCell>
             </TableRow>
           </TableHead>

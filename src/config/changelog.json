@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "entries": [
+    {
+      "version": "1.0.0",
+      "date": "2026-06-28",
+      "type": "initial",
+      "summary": "Versión inicial de la aplicación Makers Soporte. Sistema completo de gestión para el equipo de soporte técnico con autenticación, dashboard, tickets y administración de agentes.",
+      "route": "/",
+      "changes": [
+        "Módulo de autenticación con login seguro y solicitud de acceso desde Jira",
+        "Dashboard con estadísticas en tiempo real, gráficas de tickets y rendimiento de agentes",
+        "Gestión de tickets Jira con grid filtrable y exportable",
+        "Módulo de administración de tickets con asignación y seguimiento",
+        "Gestión de agentes de soporte con CRUD completo",
+        "Monitoreo de módulos del sistema con indicadores de estado"
+      ]
+    }
+  ]
+}

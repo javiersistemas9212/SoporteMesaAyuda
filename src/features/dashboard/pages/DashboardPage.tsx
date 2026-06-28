@@ -12,9 +12,13 @@ import {
   Filler,
 } from 'chart.js'
 import { Bar, Doughnut, Line } from 'react-chartjs-2'
-import { Box, Grid, Card, CardContent, Typography, Divider } from '@mui/material'
+import { useState } from 'react'
+import { Box, Grid, Card, CardContent, Typography, Divider, Button, Chip } from '@mui/material'
+import { HistoryOutlined, RocketLaunchOutlined } from '@mui/icons-material'
 import { StatCard } from '../components/StatCard'
 import { useDashboardStats } from '../hooks/useDashboardStats'
+import { ChangelogDialog } from '../../changelog/components/ChangelogDialog'
+import { useChangelog } from '../../changelog/hooks/useChangelog'
 
 ChartJS.register(
   CategoryScale,
@@ -46,6 +50,9 @@ const chartDefaults = {
 
 export function DashboardPage() {
   const { statCards, ticketsByStatus, ticketsOverTime, agentPerformance } = useDashboardStats()
+  const [changelogOpen, setChangelogOpen] = useState(false)
+  const { version, entries } = useChangelog()
+  const latestEntry = entries[0]
 
   const barData = {
     labels: ticketsOverTime.map(d => d.date),
@@ -217,13 +224,24 @@ export function DashboardPage() {
   return (
     <Box>
       {/* Header */}
-      <Box sx={{ mb: 3 }}>
-        <Typography variant="h5" fontWeight={700} color="primary.main">
-          Dashboard
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-          Resumen del equipo de soporte al cliente
-        </Typography>
+      <Box sx={{ mb: 3, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: 1 }}>
+        <Box>
+          <Typography variant="h5" fontWeight={700} color="primary.main">
+            Dashboard
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+            Resumen del equipo de soporte al cliente
+          </Typography>
+        </Box>
+        <Button
+          variant="outlined"
+          size="small"
+          startIcon={<HistoryOutlined />}
+          onClick={() => setChangelogOpen(true)}
+          sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 600, fontSize: '0.78rem' }}
+        >
+          Changelog · v{version}
+        </Button>
       </Box>
 
       {/* Stat Cards */}
@@ -273,7 +291,7 @@ export function DashboardPage() {
       </Grid>
 
       {/* Row 2: Line chart + Horizontal bar */}
-      <Grid container spacing={2.5}>
+      <Grid container spacing={2.5} sx={{ mb: 2.5 }}>
         <Grid size={{ xs: 12, md: 7 }}>
           <Card sx={{ borderRadius: 3 }}>
             <CardContent sx={{ p: 3 }}>
@@ -308,6 +326,62 @@ export function DashboardPage() {
           </Card>
         </Grid>
       </Grid>
+
+      {/* Último cambio */}
+      {latestEntry && (
+        <Card
+          sx={{
+            borderRadius: 3,
+            border: '1px solid',
+            borderColor: 'divider',
+            cursor: 'pointer',
+            transition: 'box-shadow 0.2s',
+            '&:hover': { boxShadow: 3 },
+          }}
+          onClick={() => setChangelogOpen(true)}
+        >
+          <CardContent sx={{ p: 2.5, display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box
+              sx={{
+                width: 42,
+                height: 42,
+                borderRadius: 2,
+                bgcolor: 'primary.main',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+              }}
+            >
+              <RocketLaunchOutlined sx={{ color: 'white', fontSize: 20 }} />
+            </Box>
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
+                <Typography variant="caption" color="text.secondary" fontWeight={600}>
+                  Último cambio documentado
+                </Typography>
+                <Chip
+                  label={`v${latestEntry.version}`}
+                  size="small"
+                  sx={{ height: 18, fontSize: '0.65rem', fontWeight: 700, bgcolor: '#1e3a5f', color: 'white' }}
+                />
+              </Box>
+              <Typography
+                variant="body2"
+                color="text.primary"
+                sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+              >
+                {latestEntry.summary}
+              </Typography>
+            </Box>
+            <Typography variant="caption" color="text.secondary" sx={{ flexShrink: 0 }}>
+              Ver todo →
+            </Typography>
+          </CardContent>
+        </Card>
+      )}
+
+      <ChangelogDialog open={changelogOpen} onClose={() => setChangelogOpen(false)} />
     </Box>
   )
 }

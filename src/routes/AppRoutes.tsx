@@ -6,6 +6,7 @@ import { TicketsUsuarioPage } from '../features/tickets/usuario/pages/TicketsUsu
 import { HealthyModulosPage } from '../features/healthy/modulos/pages/HealthyModulosPage'
 import { LoginPage } from '../features/auth/pages/LoginPage'
 import { AgentesPage } from '../features/seguridad/agentes/pages/AgentesPage'
+import { TicketAdminPage } from '../features/tickets/admin/pages/TicketAdminPage'
 import { useAuthContext } from '../contexts/AuthContext'
 
 function ProtectedRoute() {
@@ -26,7 +27,7 @@ export function AppRoutes() {
           <Route path="/tickets/usuario" element={<TicketsUsuarioPage />} />
           <Route path="/configuracion/clientes" element={<div>Clientes</div>} />
           <Route path="/configuracion/calendarios" element={<div>Calendarios</div>} />
-          <Route path="/administracion/tickets" element={<div>Administración de Tickets</div>} />
+          <Route path="/administracion/tickets" element={<TicketAdminPage />} />
           <Route path="/informes/ver" element={<div>Ver Informes</div>} />
           <Route path="/healthy/apis" element={<div>APIs</div>} />
           <Route path="/healthy/logs" element={<div>Logs</div>} />

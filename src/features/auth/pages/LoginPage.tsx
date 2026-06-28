@@ -8,6 +8,7 @@ import {
   Button,
   Chip,
   CircularProgress,
+  Divider,
   IconButton,
   InputAdornment,
   TextField,
@@ -16,6 +17,7 @@ import {
 import {
   EmailOutlined,
   LockOutlined,
+  PersonAddOutlined,
   Visibility,
   VisibilityOff,
   CheckCircleOutline,
@@ -24,6 +26,7 @@ import { keyframes } from '@mui/system'
 import { loginSchema, type LoginFormValues } from '../schemas/auth.schema'
 import { authenticate } from '../services/authService'
 import { useAuthContext } from '../../../contexts/AuthContext'
+import { SolicitarAccesoDialog } from '../components/SolicitarAccesoDialog'
 
 const scrollWord = keyframes`
   from { transform: translateX(50vw);   }
@@ -70,6 +73,7 @@ export function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [authError, setAuthError] = useState<string | null>(null)
+  const [solicitarAccesoOpen, setSolicitarAccesoOpen] = useState(false)
   const { login } = useAuthContext()
   const navigate = useNavigate()
 
@@ -437,6 +441,35 @@ export function LoginPage() {
             </Box>
           </Box>
 
+          {/* Solicitar acceso */}
+          <Box sx={{ mt: 2 }}>
+            <Divider sx={{ mb: 2 }}>
+              <Typography variant="caption" sx={{ color: 'text.disabled', px: 1 }}>
+                ¿No tienes cuenta?
+              </Typography>
+            </Divider>
+            <Button
+              variant="outlined"
+              fullWidth
+              startIcon={<PersonAddOutlined />}
+              onClick={() => setSolicitarAccesoOpen(true)}
+              sx={{
+                py: 1.3,
+                fontWeight: 600,
+                fontSize: '0.88rem',
+                borderRadius: 2,
+                borderColor: 'rgba(18,36,64,0.2)',
+                color: '#122440',
+                '&:hover': {
+                  borderColor: '#41819b',
+                  bgcolor: 'rgba(18,36,64,0.04)',
+                },
+              }}
+            >
+              Solicitar usuario y contraseña
+            </Button>
+          </Box>
+
           <Typography
             variant="caption"
             sx={{ display: 'block', textAlign: 'center', mt: 3, color: 'text.disabled' }}
@@ -445,6 +478,11 @@ export function LoginPage() {
           </Typography>
         </Box>
       </Box>
+
+      <SolicitarAccesoDialog
+        open={solicitarAccesoOpen}
+        onClose={() => setSolicitarAccesoOpen(false)}
+      />
     </Box>
   )
 }

@@ -11,11 +11,14 @@ import {
   ListItemIcon,
   Divider,
   Chip,
+  Tooltip,
 } from '@mui/material'
 import { Logout, Person, AdminPanelSettings, SupportAgent } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../contexts/AuthContext'
 import { MiPerfilDialog } from '../components/MiPerfilDialog'
+import { ChangelogDialog } from '../features/changelog/components/ChangelogDialog'
+import { useChangelog } from '../features/changelog/hooks/useChangelog'
 
 const ROL_COLORS: Record<string, string> = {
   Administrador: '#0288d1',
@@ -26,8 +29,10 @@ const ROL_COLORS: Record<string, string> = {
 export function TopBar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [profileOpen, setProfileOpen] = useState(false)
+  const [changelogOpen, setChangelogOpen] = useState(false)
   const { user, logout } = useAuthContext()
   const navigate = useNavigate()
+  const { version } = useChangelog()
 
   const handleOpen = (e: React.MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget)
   const handleClose = () => setAnchorEl(null)
@@ -85,17 +90,23 @@ export function TopBar() {
 
         {/* Right side */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Chip
-            label="versión 1.0"
-            size="small"
-            sx={{
-              bgcolor: 'rgba(255,255,255,0.15)',
-              color: 'white',
-              fontWeight: 600,
-              fontSize: '0.7rem',
-              height: 24,
-            }}
-          />
+          <Tooltip title="Ver changelog" arrow>
+            <Chip
+              label={`v${version}`}
+              size="small"
+              onClick={() => setChangelogOpen(true)}
+              sx={{
+                bgcolor: 'rgba(255,255,255,0.15)',
+                color: 'white',
+                fontWeight: 600,
+                fontSize: '0.7rem',
+                height: 24,
+                cursor: 'pointer',
+                transition: 'background-color 0.2s',
+                '&:hover': { bgcolor: 'rgba(255,255,255,0.28)' },
+              }}
+            />
+          </Tooltip>
 
           <IconButton onClick={handleOpen} sx={{ p: 0.5 }}>
             <Avatar
@@ -177,6 +188,7 @@ export function TopBar() {
     </AppBar>
 
     <MiPerfilDialog open={profileOpen} onClose={() => setProfileOpen(false)} />
+    <ChangelogDialog open={changelogOpen} onClose={() => setChangelogOpen(false)} />
   </>
   )
 }
