@@ -245,7 +245,7 @@ export function DashboardPage() {
       </Box>
 
       {/* Stat Cards */}
-      <Grid container spacing={2.5} sx={{ mb: 3 }}>
+      <Grid container spacing={2.5} justifyContent="center" sx={{ mb: 3 }}>
         {statCards.map(stat => (
           <Grid key={stat.title} size={{ xs: 12, sm: 6, xl: 3 }}>
             <StatCard stat={stat} />
@@ -254,17 +254,17 @@ export function DashboardPage() {
       </Grid>
 
       {/* Row 1: Bar chart (wide) + Doughnut */}
-      <Grid container spacing={2.5} sx={{ mb: 2.5 }}>
+      <Grid container spacing={2.5} justifyContent="center" sx={{ mb: 2.5 }}>
         <Grid size={{ xs: 12, md: 8 }}>
           <Card sx={{ borderRadius: 3 }}>
-            <CardContent sx={{ p: 3 }}>
-              <Typography variant="h6" fontWeight={600} sx={{ mb: 0.5 }}>
+            <CardContent sx={{ p: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <Typography variant="h6" fontWeight={600} sx={{ mb: 0.5 }} textAlign="center">
                 Tickets por Semana
               </Typography>
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="caption" color="text.secondary" textAlign="center">
                 Comparativa de tickets abiertos vs resueltos
               </Typography>
-              <Divider sx={{ my: 1.5 }} />
+              <Divider sx={{ my: 1.5, width: '100%' }} />
               <Box sx={{ position: 'relative', width: '100%', height: 280 }}>
                 <Bar data={barData} options={barOptions} />
               </Box>
@@ -274,14 +274,14 @@ export function DashboardPage() {
 
         <Grid size={{ xs: 12, md: 4 }}>
           <Card sx={{ borderRadius: 3, height: '100%' }}>
-            <CardContent sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column' }}>
-              <Typography variant="h6" fontWeight={600} sx={{ mb: 0.5 }}>
+            <CardContent sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <Typography variant="h6" fontWeight={600} sx={{ mb: 0.5 }} textAlign="center">
                 Estado de Tickets
               </Typography>
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="caption" color="text.secondary" textAlign="center">
                 Distribución actual por estado
               </Typography>
-              <Divider sx={{ my: 1.5 }} />
+              <Divider sx={{ my: 1.5, width: '100%' }} />
               <Box sx={{ position: 'relative', width: '100%', flex: 1, minHeight: 260 }}>
                 <Doughnut data={doughnutData} options={doughnutOptions} />
               </Box>
@@ -291,17 +291,17 @@ export function DashboardPage() {
       </Grid>
 
       {/* Row 2: Line chart + Horizontal bar */}
-      <Grid container spacing={2.5} sx={{ mb: 2.5 }}>
+      <Grid container spacing={2.5} justifyContent="center" sx={{ mb: 2.5 }}>
         <Grid size={{ xs: 12, md: 7 }}>
           <Card sx={{ borderRadius: 3 }}>
-            <CardContent sx={{ p: 3 }}>
-              <Typography variant="h6" fontWeight={600} sx={{ mb: 0.5 }}>
+            <CardContent sx={{ p: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <Typography variant="h6" fontWeight={600} sx={{ mb: 0.5 }} textAlign="center">
                 Tendencia de Resolución
               </Typography>
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="caption" color="text.secondary" textAlign="center">
                 Evolución semanal de tickets
               </Typography>
-              <Divider sx={{ my: 1.5 }} />
+              <Divider sx={{ my: 1.5, width: '100%' }} />
               <Box sx={{ position: 'relative', width: '100%', height: 250 }}>
                 <Line data={lineData} options={lineOptions} />
               </Box>
@@ -311,14 +311,14 @@ export function DashboardPage() {
 
         <Grid size={{ xs: 12, md: 5 }}>
           <Card sx={{ borderRadius: 3 }}>
-            <CardContent sx={{ p: 3 }}>
-              <Typography variant="h6" fontWeight={600} sx={{ mb: 0.5 }}>
+            <CardContent sx={{ p: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <Typography variant="h6" fontWeight={600} sx={{ mb: 0.5 }} textAlign="center">
                 Top Agentes
               </Typography>
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="caption" color="text.secondary" textAlign="center">
                 Tickets resueltos por agente
               </Typography>
-              <Divider sx={{ my: 1.5 }} />
+              <Divider sx={{ my: 1.5, width: '100%' }} />
               <Box sx={{ position: 'relative', width: '100%', height: 250 }}>
                 <Bar data={agentBarData} options={agentBarOptions} />
               </Box>

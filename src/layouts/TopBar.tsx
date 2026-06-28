@@ -59,7 +59,10 @@ export function TopBar() {
     >
       <Toolbar sx={{ minHeight: '80px !important', px: 3, gap: 2 }}>
         {/* Branding */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+        <Box
+          onClick={() => navigate('/dashboard')}
+          sx={{ display: 'flex', alignItems: 'center', gap: 1.5, cursor: 'pointer', '&:hover': { opacity: 0.85 } }}
+        >
           <Box
             sx={{
               width: 36,
