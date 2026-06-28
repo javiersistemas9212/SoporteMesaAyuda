@@ -1,6 +1,19 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "entries": [
+    {
+      "version": "1.0.1",
+      "date": "2026-06-28",
+      "type": "patch",
+      "summary": "Mejoras visuales en el Dashboard y la barra de navegación superior. Se centró el contenido de las tarjetas y gráficas, y se habilitó la navegación al dashboard al hacer clic en el logo.",
+      "route": "/dashboard",
+      "changes": [
+        "Contenido de StatCard centrado verticalmente y en texto",
+        "Títulos, subtítulos y divisores de gráficas alineados al centro en DashboardPage",
+        "Grids del dashboard con justifyContent center para mejor distribución",
+        "Logo y nombre en TopBar ahora navegan a /dashboard al hacer clic"
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "2026-06-28",
