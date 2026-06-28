@@ -32,7 +32,7 @@ export const NAV_ITEMS: NavItem[] = [
   },
   {
     id: 'configuracion',
-    label: 'Configuración',
+    label: 'Configuración y Maestros',
     Icon: Settings,
     children: [
       { label: 'Clientes', path: '/configuracion/clientes' },

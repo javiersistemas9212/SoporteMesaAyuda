@@ -1,0 +1,46 @@
+[
+  {
+    "Id": 1,
+    "NombreCorto": "ACME",
+    "NombreLargo": "ACME Corporation S.A.S.",
+    "Nit": "900123456-7",
+    "ColorInstitucional": "#e63946",
+    "VersionActual": "2.4.1",
+    "ContactoTI": "juan.perez@acme.com",
+    "Creditos": 150,
+    "TipoCliente": "SaaS"
+  },
+  {
+    "Id": 2,
+    "NombreCorto": "TechPro",
+    "NombreLargo": "TechPro Solutions Ltda.",
+    "Nit": "800987654-3",
+    "ColorInstitucional": "#2196f3",
+    "VersionActual": "1.8.0",
+    "ContactoTI": "soporte@techpro.co",
+    "Creditos": 80,
+    "TipoCliente": "On-premise"
+  },
+  {
+    "Id": 3,
+    "NombreCorto": "GlobalBank",
+    "NombreLargo": "GlobalBank Financial S.A.",
+    "Nit": "830456789-1",
+    "ColorInstitucional": "#1b5e20",
+    "VersionActual": "3.1.2",
+    "ContactoTI": "ti@globalbank.com.co",
+    "Creditos": 500,
+    "TipoCliente": "SaaS"
+  },
+  {
+    "Id": 4,
+    "NombreCorto": "HealthCare+",
+    "NombreLargo": "HealthCare Plus Colombia S.A.S.",
+    "Nit": "901234567-2",
+    "ColorInstitucional": "#0097a7",
+    "VersionActual": "1.2.5",
+    "ContactoTI": "admin.ti@healthcareplus.co",
+    "Creditos": 200,
+    "TipoCliente": "On-premise"
+  }
+]

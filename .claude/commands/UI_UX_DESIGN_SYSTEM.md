@@ -342,6 +342,107 @@ Large tables should use DataGrid.
 
 Rows should have subtle hover feedback.
 
+## Table / Grid Convention (mandatory for all CRUD modules)
+
+Every table/grid must follow this exact structure:
+
+### 1. Header bar — solid primary color background
+
+The table must have a header bar above the columns with `bgcolor: 'primary.main'`. It must show:
+
+* An icon + title describing the entity
+* The record count: **"Entity Name — X de Y registros"** (filtered vs total)
+* An active-filters chip (white, semi-transparent background) when filters are applied — the chip's `onDelete` clears all filters
+
+```tsx
+<Box sx={{ px: 3, py: 2, bgcolor: 'primary.main', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+    <SomeIcon sx={{ color: 'white', fontSize: 20 }} />
+    <Typography variant="h6" sx={{ color: 'white', fontWeight: 600, fontSize: '1rem' }}>
+      Entity Name — {processedData.length} de {data.length} registros
+    </Typography>
+  </Box>
+  {activeFilters > 0 && (
+    <Chip
+      label={`${activeFilters} filtro${activeFilters > 1 ? 's' : ''} activo${activeFilters > 1 ? 's' : ''}`}
+      size="small"
+      onDelete={() => setFilters({})}
+      sx={{ bgcolor: 'rgba(255,255,255,0.2)', color: 'white', fontWeight: 600, fontSize: '0.7rem' }}
+    />
+  )}
+</Box>
+```
+
+### 2. Column filters — every data column must have a filter icon
+
+ALL data columns (except Acciones and #) must have:
+
+* A `TableSortLabel` for sorting
+* A filter `IconButton` with `FilterListIcon` next to the sort label
+* The icon is `primary.main` when the filter is active, `text.disabled` otherwise
+
+Use a single `filterAnchor: { field: FilterField; el: HTMLElement } | null` state (not one anchor per column).
+
+**IMPORTANT — never extract a `FilterableHeader` sub-component inside the grid component.** Inline helper components defined inside a parent function component are re-created on every render, causing React to unmount/remount them. This destroys the DOM node just after the user clicks the filter icon, leaving `anchorEl` pointing to a detached element, and the Popover falls back to position (0, 0) — the top-left corner of the page.
+
+Instead, inline the `<Box>` + `<TableSortLabel>` + `<IconButton>` directly in each `<TableCell>`, exactly like `UsuarioGrid` does:
+
+```tsx
+<TableCell sx={{ fontWeight: 700, bgcolor: 'grey.50', whiteSpace: 'nowrap', pr: 0.5 }}>
+  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    <TableSortLabel
+      active={sortField === 'FieldName'}
+      direction={sortField === 'FieldName' ? sortOrder : 'asc'}
+      onClick={() => handleSort('FieldName')}
+    >
+      Label
+    </TableSortLabel>
+    <IconButton
+      size="small"
+      onClick={e => setFilterAnchor({ field: 'FieldName', el: e.currentTarget })}
+      sx={{ ml: 0.25, p: 0.25, color: isFilterActive('FieldName') ? 'primary.main' : 'text.disabled', '&:hover': { color: 'primary.main' } }}
+    >
+      <FilterListIcon sx={{ fontSize: 15 }} />
+    </IconButton>
+  </Box>
+</TableCell>
+```
+
+Render a single `<ColumnFilter />` conditionally using `filterAnchor`:
+
+```tsx
+{filterAnchor && (
+  <ColumnFilter
+    anchorEl={filterAnchor.el}
+    onClose={() => setFilterAnchor(null)}
+    label={...}
+    options={filterOptions[filterAnchor.field]}
+    selected={filters[filterAnchor.field] ?? new Set()}
+    onChange={next => handleFilterChange(filterAnchor.field, next)}
+  />
+)}
+```
+
+### 3. Column order
+
+Acciones column always comes first, followed by # (row number), then data columns.
+
+### 4. Row striping
+
+Alternate rows with `background.paper` / `grey.50` and use `primary.50` on hover:
+
+```tsx
+bgcolor: idx % 2 === 0 ? 'background.paper' : 'grey.50',
+'&:hover': { bgcolor: 'primary.50' },
+```
+
+### 5. Table settings
+
+* `<Table size="small" stickyHeader>`
+* `labelRowsPerPage="Filas por página:"`
+* `labelDisplayedRows={({ from, to, count }) => \`${from}–${to} de ${count}\`}`
+* `rowsPerPageOptions={[5, 10, 25]}`
+
 ---
 
 # Forms

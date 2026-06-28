@@ -7,6 +7,7 @@ import { HealthyModulosPage } from '../features/healthy/modulos/pages/HealthyMod
 import { LoginPage } from '../features/auth/pages/LoginPage'
 import { AgentesPage } from '../features/seguridad/agentes/pages/AgentesPage'
 import { TicketAdminPage } from '../features/tickets/admin/pages/TicketAdminPage'
+import { ClientesPage } from '../features/configuracion/clientes/pages/ClientesPage'
 import { useAuthContext } from '../contexts/AuthContext'
 
 function ProtectedRoute() {
@@ -25,7 +26,7 @@ export function AppRoutes() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/tickets/jira" element={<JiraTicketsPage />} />
           <Route path="/tickets/usuario" element={<TicketsUsuarioPage />} />
-          <Route path="/configuracion/clientes" element={<div>Clientes</div>} />
+          <Route path="/configuracion/clientes" element={<ClientesPage />} />
           <Route path="/configuracion/calendarios" element={<div>Calendarios</div>} />
           <Route path="/administracion/tickets" element={<TicketAdminPage />} />
           <Route path="/informes/ver" element={<div>Ver Informes</div>} />

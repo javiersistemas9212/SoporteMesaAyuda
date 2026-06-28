@@ -1,6 +1,23 @@
 {
-  "version": "1.0.1",
+  "version": "1.1.0",
   "entries": [
+    {
+      "version": "1.1.0",
+      "date": "2026-06-28",
+      "type": "minor",
+      "summary": "Módulo CRUD completo de Clientes bajo Configuración y Maestros. Incluye grilla con filtros por columna, formulario de creación/edición, servicio Axios, validaciones Zod y datos mock.",
+      "route": "/configuracion/clientes",
+      "changes": [
+        "Nuevo módulo Clientes en src/features/configuracion/clientes con estructura CRUD completa",
+        "ClientesGrid con filtros por columna (nombre, RIF, tipo, estado, ciudad), columna Acciones y paginación",
+        "ClienteFormDialog para creación y edición con validaciones Zod",
+        "Hook useClientes con TanStack Query y operaciones CRUD",
+        "clienteService con integración Axios y datos mock de clientes.json",
+        "Menú de navegación actualizado de 'Configuración' a 'Configuración y Maestros'",
+        "Ruta /configuracion/clientes conectada al componente ClientesPage",
+        "Design system actualizado con convención obligatoria de tabla/grid (header primario, conteo registros, chip de filtros)"
+      ]
+    },
     {
       "version": "1.0.1",
       "date": "2026-06-28",
